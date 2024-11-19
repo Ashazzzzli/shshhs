@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I love you varisha</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-image: url('https://4kwallpapers.com/images/walls/thumbs_3t/9983.jpg');
+            background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100vw;
+            font-family: Arial, sans-serif;
+        }
+
+        .husband-message {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 50px;
+            font-weight: bold;
+            color: #ff007f;
+            -webkit-text-stroke: 2px black;
+            text-stroke: 2px black;
+            z-index: 3;
+        }
+
+        .message, .message-2, .kiss {
+            position: absolute;
+            font-size: 40px;
+            font-weight: bold;
+            color: black;
+            text-shadow: 3px 3px 6px rgba(255, 105, 180, 1);
+            opacity: 0;
+            animation: appearAndDisappear 1.5s forwards;
+            z-index: 2;
+        }
+
+        .message-2 {
+            font-size: 30px;
+            color: #FF1493;
+            text-shadow: 3px 3px 6px black;
+            z-index: 1;
+        }
+
+        .kiss {
+            color: red;
+            font-size: 25px;
+            text-shadow: 2px 2px 4px rgba(255, 20, 20, 0.8);
+        }
+
+        @keyframes appearAndDisappear {
+            0% {
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+
+        .question-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-image: url('https://i.pinimg.com/originals/7d/68/a4/7d68a425553c15f0edbddbc163d9c462.jpg');
+            background-size: cover;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: black;
+            font-weight: bold;
+            font-size: 36px;
+            z-index: 10;
+            display: none; /* Initially hidden */
+        }
+
+        .answer-button {
+            margin: 10px;
+            padding: 20px 50px;  /* Reduced size of the button */
+            font-size: 30px;      /* Reduced font size of the button */
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #ff007f;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 36px;
+            font-weight: bold;
+            color: inherit;
+            text-shadow: none;
+        }
+
+        .wrong { color: red; }
+        .correct { color: green; }
+
+        /* Minimized container */
+        #minimized-container {
+            width: 300px;
+            height: 60px;
+            background-image: url('https://i.pinimg.com/originals/5c/ac/95/5cac9520af5d092c83bcce1de30609ed.jpg');
+            background-size: cover;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex; /* Initially visible */
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-weight: bold;
+            border-radius: 30px; /* Racetrack shape */
+            cursor: pointer;
+            outline: 3px solid black; /* Added outline */
+            z-index: 11; /* Make sure it's above the bubbles */
+        }
+
+        /* Style for the audio emoji button */
+        #audio-button {
+            font-size: 50px;
+            cursor: pointer;
+            position: fixed; /* Fixed position */
+            bottom: 20px; /* Place at the bottom */
+            left: 20px; /* Place on the left */
+            z-index: 20; /* Make sure it's above the bubbles */
+        }
+
+        /* Ensuring the button stays in front of the bubbles */
+        .message, .message-2, .kiss {
+            z-index: 1; /* These should remain behind the audio button */
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio Button as Emoji -->
+    <div id="audio-button" onclick="toggleAudio()">🔊</div>
+
+    <!-- Audio File that will play or pause on button click -->
+    <audio id="audio" preload="auto">
+        <source src="https://github.com/Ashazzzzli/sgsdfg/raw/refs/heads/main/Hello%20This%20Is%20Kitty%20-%20Tiktok%20song.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Husband's Message -->
+    <div class="husband-message">from ashaz >~<</div>
+
+    <!-- Initially hidden question container -->
+    <div class="question-container" id="question-container">
+        <p>Do you love me more?</p>
+        <button class="answer-button" onclick="showFeedback('wrong')">Yes</button>
+        <button class="answer-button" onclick="showFeedback('correct')">No</button>
+        <div id="feedback" class="feedback"></div>
+        <!-- Minimization X button -->
+        <span id="minimize-btn" onclick="minimizeContainer()" style="cursor: pointer; position: absolute; top: 10px; right: 10px; font-size: 30px; color: black;">X</span>
+    </div>
+
+    <!-- Minimized version of the question container -->
+    <div id="minimized-container" onclick="maximizeContainer()">
+        Do you love me?
+    </div>
+
+    <script>
+        // Function to toggle play/pause when the emoji is clicked
+        function toggleAudio() {
+            const audio = document.getElementById('audio');
+            const audioButton = document.getElementById('audio-button');
+
+            if (audio.paused) {
+                audio.play(); // Play the audio
+                audioButton.textContent = '❚❚'; // Change the emoji to a pause symbol
+            } else {
+                audio.pause(); // Pause the audio
+                audioButton.textContent = '🔊'; // Change the emoji back to play
+            }
+        }
+
+        // Initially hide the question container, only show minimized container
+        window.onload = () => {
+            const minimizedContainer = document.getElementById('minimized-container');
+            minimizedContainer.style.display = 'flex'; // Keep minimized container visible initially
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.style.display = 'none'; // Hide the question container initially
+        };
+
+        function showFeedback(answer) {
+            const feedbackDiv = document.getElementById('feedback');
+            feedbackDiv.style.opacity = "1";
+            if (answer === 'wrong') {
+                feedbackDiv.textContent = 'Err! Wrong!';
+                feedbackDiv.className = 'feedback wrong';
+                setTimeout(() => feedbackDiv.style.opacity = "0", 2000);
+            } else if (answer === 'correct') {
+                feedbackDiv.textContent = 'Yay! Correct!';
+                feedbackDiv.className = 'feedback correct';
+            }
+        }
+
+        function minimizeContainer() {
+            const questionContainer = document.querySelector('.question-container');
+            const minimizedContainer = document.getElementById('minimized-container');
+            questionContainer.style.display = 'none'; // Hide the question container
+            minimizedContainer.style.display = 'flex'; // Show the minimized version
+        }
+
+        function maximizeContainer() {
+            const questionContainer = document.querySelector('.question-container');
+            const minimizedContainer = document.getElementById('minimized-container');
+            questionContainer.style.display = 'block'; // Show the original question container
+            minimizedContainer.style.display = 'none'; // Hide the minimized version
+        }
+
+        function createBubble() {
+            const message = document.createElement('div');
+            message.classList.add('message');
+            message.textContent = 'happy birthday baby';
+            message.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+            message.style.top = `${Math.random() * (window.innerHeight - 50)}px`;
+            document.body.appendChild(message);
+            setTimeout(() => message.remove(), 2000);
+        }
+
+        function createBubble2() {
+            const message = document.createElement('div');
+            message.classList.add('message-2');
+            message.textContent = 'I love you varisha';
+            message.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+            message.style.top = `${Math.random() * (window.innerHeight - 50)}px`;
+            document.body.appendChild(message);
+            setTimeout(() => message.remove(), 2000);
+        }
+
+        function createKissBubble() {
+            for (let i = 0; i < 45; i++) {
+                const kiss = document.createElement('div');
+                kiss.classList.add('kiss');
+                kiss.textContent = 'kiss';
+                kiss.style.left = `${Math.random() * (window.innerWidth - 50)}px`;
+                kiss.style.top = `${Math.random() * (window.innerHeight - 50)}px`;
+                document.body.appendChild(kiss);
+                setTimeout(() => kiss.remove(), 1500);
+            }
+        }
+
+        setInterval(createBubble, 100);
+        setInterval(createBubble2, 100);
+        setInterval(createKissBubble, 2000);
+    </script>
+</body>
+</html>
